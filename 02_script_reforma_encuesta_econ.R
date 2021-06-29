@@ -294,7 +294,7 @@ for(i in 1:length(v_names_loop)){
         as.character(seq(0,100,25)), "%"
       )
     ) + 
-    scale_fill_gradient(high = mcv_discrete[6], low = mcv_discrete[1]) +
+    scale_fill_gradient(high = mcv_discrete[2], low = mcv_discrete[1]) +
     labs(title= str_wrap(fiuf, width = 75),
          caption = fiuffi) +
     theme_minimal() +
@@ -376,7 +376,7 @@ for(i in 1:length(v_names_loop)){
           as.character(seq(25,100,25))), "%"
       )
     ) + 
-    scale_fill_manual("", values = c(mcv_discrete[6], mcv_discrete[1])) +
+    scale_fill_manual("", values = c(mcv_discrete[2], mcv_discrete[1])) +
     labs(title= str_wrap(fiuf, width = 75),
          subtitle = fiuff,
          caption = fiuffi) +
@@ -529,7 +529,7 @@ for(i in 1:length(v_names_loop)){
         as.character(seq(0,100,25)), "%"
       )
     ) + 
-    scale_fill_gradient(high = mcv_discrete[6], low = mcv_discrete[1]) +
+    scale_fill_gradient(high = mcv_discrete[1], low = mcv_discrete[2]) +
     labs(title= str_wrap(fiuf, width = 75),
          subtitle = fiuff,
          caption = fiuffi) +
@@ -603,7 +603,7 @@ for(i in 1:length(v_names)){
              aes(x = str_wrap(var_v,10), 
                  y = round(prop*100, 2), 
                  label = paste0(abs(round(prop*100, 2)), "%"))) + 
-      geom_bar(stat = "identity", width = .3, fill = mcv_pib[x]) +
+      geom_bar(stat = "identity", width = .3, fill = mcv_semaforo[x]) +
       geom_text(size = 7, vjust = -0.5) +
       scale_y_continuous(
         limits = c(0,100),
@@ -691,67 +691,6 @@ ggplot(
   aes(
     x = reorder(v_id_x, str_order(v_id)),
     fill = reorder(v_id_x, str_order(v_id)),
-    y = prop*100,
-    label = paste0(round(prop*100,2), "%")
-  )
-) + 
-  geom_bar(stat = "identity", width = .3) +
-  geom_text(size = 7, vjust = -0.5) +
-  scale_y_continuous(
-    limits = c(0,100),
-    breaks = seq(0,100,25),
-    labels = paste0(
-      as.character(seq(0,100,25)), "%"
-    )
-  ) + 
-  scale_fill_manual("", values = c(mcv_discrete[6],mcv_discrete[3],mcv_discrete[1])) +
-  labs(title= str_wrap(fiuf, width = 75),
-       caption = fiuffi) +
-  theme_minimal() +
-  theme(plot.title = element_text(size = 30, face = "bold", hjust = 0.5),
-        plot.subtitle = element_text(size = 25),
-        plot.caption = element_text(size = 20),
-        panel.background = element_rect(fill = "transparent",colour = NA),
-        text = element_text(family = "Trebuchet MS"),
-        axis.title.x = element_blank(),
-        axis.title.y = element_blank(),
-        axis.text.x = element_text(size = 18),
-        axis.text.y = element_text(size = 12),
-        legend.title = element_blank(),
-        legend.text = element_text(size = 20),
-        legend.position = "none")
-
-# Funcionamiento de la economía ---- 
-
-
-fiuf <- "La forma en la que la economía funciona hoy en día [...]"
-ggplot(
-  prop_simples %>% 
-    filter(
-      str_starts(v_id, "30a"), var_v == "En desacuerdo"
-    ) %>% 
-    bind_rows(
-      prop_simples %>% 
-        filter(
-          str_starts(v_id, "30b"), var_v == "En desacuerdo"
-        )
-    ) %>% 
-    bind_rows(
-      prop_simples %>% 
-        filter(
-          str_starts(v_id, "30c"), var_v == "De acuerdo"
-        )
-    ) %>% 
-    mutate(
-      v_id_x = case_when(
-        str_detect(v_id, "30a") ~ "Genera mayor malestar que bienestar en el mundo",
-        str_detect(v_id, "30b") ~ "No le dejará un mejor futuro a las siguientes generaciones",
-        str_detect(v_id, "30c") ~ "Sólo beneficia a una minoría privilegiada",
-      )
-    ),
-  aes(
-    x = str_wrap(reorder(v_id_x, str_order(v_id)), 25),
-    fill = str_wrap(reorder(v_id_x, str_order(v_id)), 25),
     y = prop*100,
     label = paste0(round(prop*100,2), "%")
   )
